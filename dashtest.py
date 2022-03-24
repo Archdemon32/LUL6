@@ -8,11 +8,11 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-df=pd.read_excel(r'C:\Users\archd\Desktop\KEA\my_shop_data.xlsx')
-df_customers = pd.read_excel(r'C:\Users\archd\Desktop\KEA\my_shop_data.xlsx', sheet_name="customers")
-df_order = pd.read_excel(r'C:\Users\archd\Desktop\KEA\my_shop_data.xlsx', sheet_name="order")
-df_employee = pd.read_excel(r'C:\Users\archd\Desktop\KEA\my_shop_data.xlsx', sheet_name="employee")
-df_products = pd.read_excel(r'C:\Users\archd\Desktop\KEA\my_shop_data.xlsx', sheet_name="products")
+githubpath = './data/'
+df_customers = pd.read_excel(githubpath + 'my_shop_data.xlsx', sheet_name="customers")
+df_order = pd.read_excel(githubpath + 'my_shop_data.xlsx', sheet_name="order")
+df_employee = pd.read_excel(githubpath + 'my_shop_data.xlsx', sheet_name="employee")
+df_products = pd.read_excel(githubpath + 'my_shop_data.xlsx', sheet_name="products")
 
 def get_data():
     df_employee['Employee_Names'] = df_employee['firstname'] + ' ' + df_employee['lastname']
