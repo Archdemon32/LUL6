@@ -34,22 +34,12 @@ order = get_data()
 
 app = Dash(__name__)
 
-
 app.layout = html.Div([
     html.H4('Sales by Employees'),
-    dcc.Dropdown(
-        id="dropdown",
-        options=["Luxuary", 'Standard'],
-        value="Standard",
-        clearable=False,
-    ),
-    dcc.Graph(id="graph"),
-])
-
+    dcc.Graph(id="graph"),])
 
 @app.callback(
-    Output("graph", "figure"),
-    Input("dropdown", "value"))
+    Output("graph", "figure"))
 def update_bar_chart(day):
     mask = df["type"] == type
     fig_employee = px.bar(order,
@@ -57,6 +47,5 @@ def update_bar_chart(day):
         color='type', title='Sales by Employee',
         labels={'Sales':'Total Sales', 'Employee_Names':'Employee', 'type':'Product Type'})
     return fig
-
 
 app.run_server(debug=True)
