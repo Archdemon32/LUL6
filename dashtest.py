@@ -26,28 +26,25 @@ def get_data():
 
 order = get_data()
 
-fig_product=px.bar(order,
-    x='productname', y='Sales',
-    color='type', title='Sales by product',
-    labels={'Sales':'Total Sales', 'productname':'Products', 'type':'Product Type'})
-fig_product.show()
-fig_employee = px.bar(order,
-    x='Employee_Names', y='Sales',
-    color='type', title='Sales by Employee',
-    labels={'Sales':'Total Sales', 'Employee_Names':'Employee', 'type':'Product Type'})
-fig_employee.show()
+# fig_product=px.bar(order,
+#     x='productname', y='Sales',
+#     color='type', title='Sales by product',
+#     labels={'Sales':'Total Sales', 'productname':'Products', 'type':'Product Type'})
 
-# app = Dash(__name__)
+app = Dash(__name__)
 
-# app.layout = html.Div([
-#     html.H4('Sales by Employees'),
-#     dcc.Graph(id="graph"),])
+app.layout = html.Div([
+    html.H4('Sales by Employees'),
+    dcc.Graph(id="graph"),])
 
-# @app.callback(
-#     Output("graph", "figure"))
-# def update_bar_chart(day):
-#     mask = df["type"] == type
-    
-#     return fig
+@app.callback(
+    Output("graph", "figure"))
+def update_bar_chart(day):
+    mask = df["type"] == type
+    fig_employee = px.bar(order,
+        x='Employee_Names', y='Sales',
+        color='type', title='Sales by Employee',
+        labels={'Sales':'Total Sales', 'Employee_Names':'Employee', 'type':'Product Type'})
+    return fig
 
-# app.run_server(debug=True)
+app.run_server(debug=True)
