@@ -1,12 +1,6 @@
-import dash
-from dash import html
-from dash import dcc
-from dash.dependencies import Input, Output
-
+from dash import Dash, html, dcc
 import pandas as pd
-
 import plotly.express as px
-import plotly.graph_objects as go
 
 githubpath = './data/'
 df_customers = pd.read_excel(githubpath + 'my_shop_data.xlsx', sheet_name="customers")
@@ -25,26 +19,31 @@ def get_data():
     return order
 
 order = get_data()
+fig_product=px.bar(order,
+    x='productname', y='Sales',
+    color='type', title='Sales by product',
+    labels={'Sales':'Total Sales', 'productname':'Products', 'type':'Product Type'})
 
-# fig_product=px.bar(order,
-#     x='productname', y='Sales',
-#     color='type', title='Sales by product',
-#     labels={'Sales':'Total Sales', 'productname':'Products', 'type':'Product Type'})
+fig_employee = px.bar(order,
+    x='Employee_Names', y='Sales',
+    color='type', title='Sales by Employee',
+    labels={'Sales':'Total Sales', 'Employee_Names':'Employee', 'type':'Product Type'})
 
 app = Dash(__name__)
 
-app.layout = html.Div([
-    html.H4('Sales by Employees'),
-    dcc.Graph(id="graph"),])
+app.layout = html.Div(children=[
+    html.Div([
+        html.H1(children='Sales per Product'),
 
-@app.callback(
-    Output("graph", "figure"))
-def update_bar_chart(day):
-    mask = df["type"] == type
-    fig_employee = px.bar(order,
-        x='Employee_Names', y='Sales',
-        color='type', title='Sales by Employee',
-        labels={'Sales':'Total Sales', 'Employee_Names':'Employee', 'type':'Product Type'})
-    return fig
+        dcc.Graph(
+            id='graph1',
+            figure=fig_product),]),
+    html.Div([
+        html.H1(children='Sales per Employee'),
 
-app.run_server(debug=True)
+        dcc.Graph(
+            id='graph2',
+            figure=fig_employee),])])
+
+if __name__ == '__main__':
+    app.run_server(debug=True, use_reloader=False)
